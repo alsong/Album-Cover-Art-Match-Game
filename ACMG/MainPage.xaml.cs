@@ -1,4 +1,4 @@
-﻿using ACMG.Models;
+using ACMG.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -44,9 +44,7 @@ namespace ACMG
         }
 
         /*Method used to retrieve files from the device*/
-        private async Task RetrieveFilesInFolders(
-            ObservableCollection<StorageFile> list,
-            StorageFolder parent)
+        private async Task RetrieveFilesInFolders(ObservableCollection<StorageFile> list, StorageFolder parent)
         {
             foreach (var item in await parent.GetFilesAsync())
             {
@@ -68,7 +66,7 @@ namespace ACMG
 
             var randomSongs = new List<StorageFile>();
 
-            while (randomSongs.Count < 10)
+            while (randomSongs.Count < 4)
             {
                 var randomNumber = random.Next(songCount);
                 var randomSong = allSongs[randomNumber];
@@ -283,6 +281,21 @@ namespace ACMG
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+        {
+            MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
+        }
+
+        private void IconsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ShareListBoxItem.IsSelected)
+            {
+                Songs.Clear();
+                this.Frame.Navigate(typeof(MainPage), null);
+            }
+            else if (FavoritesListBoxItem.IsSelected) { this.Frame.Navigate(typeof(Drop), null); }
         }
     }
 }
